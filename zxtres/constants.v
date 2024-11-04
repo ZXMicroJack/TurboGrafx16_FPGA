@@ -1,0 +1,1 @@
+`define SDRAM_ROWBITS 13

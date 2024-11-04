@@ -1,3 +1,4 @@
+`include "constants.vh"
 //
 // sdram.v
 //
@@ -223,6 +224,16 @@ assign SDRAM_DQML = sd_dqm[0];
 
 // Write cycles can be followed immediately by either a read or a write cycle.
 
+// Request handling and priority encoding
+
+localparam PORT_NONE   = 4'd0;
+localparam PORT_ROM    = 4'd1;
+localparam PORT_WRAM   = 4'd2;
+localparam PORT_VRAM0  = 4'd3;
+localparam PORT_VRAM1  = 4'd4;
+localparam PORT_ARAM   = 4'd5;
+localparam PORT_REFRESH = 4'd6;
+
 
 
 // Refresh logic
@@ -231,6 +242,7 @@ assign SDRAM_DQML = sd_dqm[0];
 // regular accesses.  For VRAM we synchronise to the incoming
 // reference pixel clock and supply a four-cycle window beginning
 // shortly after clkref drops, during which refresh may begin.
+
 
 reg evencycle;
 reg clkref_d;
@@ -361,16 +373,6 @@ assign bankready[1]=bankbusy[1][4];
 assign bankready[2]=bankbusy[2][4];
 assign bankready[3]=bankbusy[3][4];
 
-
-// Request handling and priority encoding
-
-localparam PORT_NONE   = 4'd0;
-localparam PORT_ROM    = 4'd1;
-localparam PORT_WRAM   = 4'd2;
-localparam PORT_VRAM0  = 4'd3;
-localparam PORT_VRAM1  = 4'd4;
-localparam PORT_ARAM   = 4'd5;
-localparam PORT_REFRESH = 4'd6;
 
 reg [3:0] bankreq;
 reg [3:0] bankstate;

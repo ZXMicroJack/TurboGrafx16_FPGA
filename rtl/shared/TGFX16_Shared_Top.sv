@@ -401,7 +401,7 @@ reg   [7:0] wram_din;
 wire [15:0] wram_dout;
 reg         wram_wrD;
 reg         wram_rdD;
-wire        wram_req;
+reg        wram_req;
 wire        wram_req_ack;
 
 wire [10:0] BRM_A;
@@ -415,7 +415,7 @@ wire        VRAM0_RD;
 wire        VRAM0_WE;
 wire [15:0] VRAM0_D, VRAM0_Q;
 reg  [15:0] vram0_din;
-wire        vram0_req;
+reg        vram0_req;
 reg         vram0_weD;
 reg         vram0_rdD;
 
@@ -425,7 +425,7 @@ wire        VRAM1_RD;
 wire        VRAM1_WE;
 wire [15:0] VRAM1_D, VRAM1_Q;
 reg  [15:0] vram1_din;
-wire        vram1_req;
+reg        vram1_req;
 reg         vram1_weD;
 reg         vram1_rdD;
 
@@ -438,7 +438,7 @@ wire  [7:0] ARAM_D;
 reg   [7:0] aram_din;
 wire [15:0] aram_dout;
 reg         aram_wr_last;
-wire        aram_req;
+reg        aram_req;
 wire        aram_req_reg;
 
 reg         ioctl_wr_last;
@@ -926,7 +926,7 @@ assign HDMI_PCLK = clk_sys;
 wire [31:0] joy_0 = joy_swap ? joy_b : joy_a;
 wire [31:0] joy_1 = joy_swap ? joy_a : joy_b;
 
-wire [15:0] joy_data;
+reg [15:0] joy_data;
 always_comb begin
 	case (joy_port)
 		0: joy_data = mouse_en ? {mouse_data, mouse_data} : ~{4'hF, joy_0[11:8], joy_0[1], joy_0[2], joy_0[0], joy_0[3], joy_0[7:4]};
@@ -939,14 +939,15 @@ always_comb begin
 end
 
 wire [7:0] mouse_data;
+reg[3:0] mouse_data_hnybble;
 assign mouse_data[3:0] = ~{joy_0[7:6], mouse_flags[0], mouse_flags[1]};
-
+assign mouse_data[7:4] = mouse_data_hnybble[3:0];
 always_comb begin
 	case (mouse_cnt)
-		0: mouse_data[7:4] = ms_x[7:4];
-		1: mouse_data[7:4] = ms_x[3:0];
-		2: mouse_data[7:4] = ms_y[7:4];
-		3: mouse_data[7:4] = ms_y[3:0];
+		0: mouse_data_hnybble[3:0] = ms_x[7:4];
+		1: mouse_data_hnybble[3:0] = ms_x[3:0];
+		2: mouse_data_hnybble[3:0] = ms_y[7:4];
+		3: mouse_data_hnybble[3:0] = ms_y[3:0];
 	endcase
 end
 

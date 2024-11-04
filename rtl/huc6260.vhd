@@ -109,7 +109,8 @@ TOP_BL_LINES <= TOP_BL_LINES_E when RVBL = '1' else TOP_BL_LINES_E+4;
 DISP_LINES   <= DISP_LINES_E   when RVBL = '1' else DISP_LINES_E-11;
 
 -- Color RAM
-ram : entity work.dpram generic map (addr_width => 9, data_width => 9, mem_init_file =>"huc6260_palette_init.mif")
+ram : entity work.dpram generic map (addr_width => 9, data_width => 9, mem_init_file => "huc6260_palette_init.mif")
+--ram : entity work.dpram generic map (9, 9, "./huc6260_palette_init.mif")
 port map(
 	clock			=> CLK,
 
@@ -119,7 +120,9 @@ port map(
 	q_a			=> RAM_DO,
 	
 	address_b	=> COLNO,
-	q_b			=> COLOR
+	q_b			=> COLOR,
+	data_b      => (others => '0'),
+	wren_b      => '0'
 );
 
 process( CLK )
