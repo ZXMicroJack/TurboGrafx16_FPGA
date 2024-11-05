@@ -286,6 +286,17 @@ wire        i2c_ack;
 wire        i2c_end;
 `endif
 
+wire SPI_DO_UIO; // CONF_DATA0
+wire SPI_DO_DIO; //(SPI_SS2, SPI_SS4
+wire SPI_DO_DIOPCE; //SPI_SS2 
+
+assign SPI_DO = !CONF_DATA0 ?  SPI_DO_UIO :
+                !SPI_SS4 ? 1'bz :
+                !SPI_SS2 ? (SPI_DO_DIO & SPI_DO_DIOPCE) : 1'bz; 
+
+//	.SPI_SS2(SPI_SS2),
+//	.SPI_SS4(SPI_SS4),
+
 user_io #(.STRLEN($size(CONF_STR)>>3), .FEATURES(32'h2  /* PCE-CD */ | (BIG_OSD << 13) | (HDMI << 14))) user_io
 (
 	.clk_sys(clk_sys),
@@ -293,7 +304,7 @@ user_io #(.STRLEN($size(CONF_STR)>>3), .FEATURES(32'h2  /* PCE-CD */ | (BIG_OSD 
 	.SPI_SS_IO(CONF_DATA0),
 	.SPI_CLK(SPI_SCK),
 	.SPI_MOSI(SPI_DI),
-	.SPI_MISO(SPI_DO),
+	.SPI_MISO(SPI_DO_UIO),
 
 	.conf_str(CONF_STR),
 
@@ -344,7 +355,7 @@ data_io #(.DOUT_16(1'b1)) data_io
 	.clk_sys(clk_sys),
 	.SPI_SCK(SPI_SCK),
 	.SPI_DI(SPI_DI),
-	.SPI_DO(SPI_DO),
+	.SPI_DO(SPI_DO_DIO),
 	.SPI_SS2(SPI_SS2),
 	.SPI_SS4(SPI_SS4),
 
@@ -360,7 +371,7 @@ data_io_pce data_io_pce
 	.clk_sys(clk_sys),
 	.SPI_SCK(SPI_SCK),
 	.SPI_DI(SPI_DI),
-	.SPI_DO(SPI_DO),
+	.SPI_DO(SPI_DO_DIOPCE),
 	.SPI_SS2(SPI_SS2),
 
 	.cd_stat(cd_stat),

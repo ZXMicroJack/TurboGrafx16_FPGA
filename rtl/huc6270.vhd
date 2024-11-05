@@ -356,7 +356,9 @@ begin
 	
 	FDOT_CNT <= DOT_CNT when SP64 = '0' else FETCH_DOT;
 	SPR_CE   <= DCK_CE  when SP64 = '0' else FETCH_CE;
-	SPR_MAX  <= 15      when SP64 = '0' else 63;
+--	SPR_MAX  <= 15      when SP64 = '0' else 63;
+	SPR_MAX  <= 15      when SP64 = '0' else MAX_SPRITES - 1;
+
 
 	HSW_END_POS <= "00"&unsigned(HSW);
 	HDS_END_POS <= ("00"&unsigned(HSW)) + 1 + unsigned(HDS);
@@ -775,7 +777,7 @@ begin
 			SPR_EVAL_FULL <= '0';
 			SPR_EVAL_CNT <= (others=>'0');
 			SPR_FIND <= '0';
-			SPR_CACHE <= (others=>((others=>'0'),(others=>'0'),(others=>'0'),'0',"00",'0','0',"00",'0','0','0','0','0'));
+			SPR_CACHE <= (others=>((others=>'0'),(others=>'0'),(others=>'0'),'0',"0000",'0','0',"00",'0','0','0','0','0'));
 			SPR_Y <= (others=>'0');
 			SPR_X <= (others=>'0');
 			SPR_PC <= (others=>'0');
