@@ -1,0 +1,2 @@
+SCSI_FIFO.v,verilog,xil_defaultlib,../../../../TurboGrafx16.gen/sources_1/ip/SCSI_FIFO/sim/SCSI_FIFO.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v

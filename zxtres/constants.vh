@@ -7,7 +7,7 @@
 `define SDRAM_tRP 15000
 `define USE_SAVERAM 1
 `define USE_6BUTTONS 1
-`define USE_INTERNAL_VRAM 1
+//`define USE_INTERNAL_VRAM 1
 //`define NO_DIRECT_UPLOAD 1
 //`define USE_QSPI 1
 //`define DUAL_SDRAM 1
@@ -17,5 +17,5 @@
 `define USE_AUDIO_IN 1
 `define VGA_8BIT 1
 `define USE_CLOCK_50 1
-`define BIG_OSD 1
+//`define BIG_OSD 1
 //`define USE_HDMI 1

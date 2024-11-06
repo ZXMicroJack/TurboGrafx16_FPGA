@@ -674,16 +674,29 @@ begin
 
 	FIFO : entity work.CDDA_FIFO 
 	port map(
-		clock		=> CLK,
-		data		=> FIFO_D,
-		wrreq		=> FIFO_WR_REQ,
-		full		=> FIFO_FULL,
-		usedw       => FIFO_USEDW,
+		clk		   => CLK,
+		din		   => FIFO_D,
+		wr_en	   => FIFO_WR_REQ,
+		full	   => FIFO_FULL,
+		data_count => FIFO_USEDW,
 
-		rdreq		=> FIFO_RD_REQ,
-		empty		=> FIFO_EMPTY,
-		q			=> FIFO_Q
+		rd_en	   => FIFO_RD_REQ,
+		empty	   => FIFO_EMPTY,
+		dout	   => FIFO_Q
 	);
+
+--	FIFO : entity work.CDDA_FIFO 
+--	port map(
+--		clock		=> CLK,
+--		data		=> FIFO_D,
+--		wrreq		=> FIFO_WR_REQ,
+--		full		=> FIFO_FULL,
+--		usedw       => FIFO_USEDW,
+--
+--		rdreq		=> FIFO_RD_REQ,
+--		empty		=> FIFO_EMPTY,
+--		q			=> FIFO_Q
+--	);
 	
 	CDDA_CLK_GEN : entity work.CEGen
 	port map(

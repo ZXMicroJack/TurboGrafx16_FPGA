@@ -92,9 +92,10 @@ set_property IOSTANDARD LVCMOS33 [get_ports AUDIO_R]
 #set_property PACKAGE_PIN B1 [get_ports ear]
 #set_property IOSTANDARD LVCMOS33 [get_ports ear]
 
-#set_property -dict {PACKAGE_PIN V9 IOSTANDARD LVCMOS33} [get_ports SCLK]
-#set_property -dict {PACKAGE_PIN U7 IOSTANDARD LVCMOS33} [get_ports LRCLK]
-#set_property -dict {PACKAGE_PIN U6 IOSTANDARD LVCMOS33} [get_ports SDIN]
+
+set_property -dict {PACKAGE_PIN V9 IOSTANDARD LVCMOS33} [get_ports I2S_BCK]
+set_property -dict {PACKAGE_PIN U7 IOSTANDARD LVCMOS33} [get_ports I2S_LRCK]
+set_property -dict {PACKAGE_PIN U6 IOSTANDARD LVCMOS33} [get_ports I2S_DATA]
 
 #Joystick
 #set_property PACKAGE_PIN V2 [get_ports joy_clk]
@@ -198,6 +199,12 @@ set_property IOSTANDARD LVCMOS33 [get_ports AUDIO_R]
 #set_property IOSTANDARD LVCMOS33 [get_ports SRAM_LB_N]
 
 #SD
+set_property PACKAGE_PIN M6 [get_ports SD_SCK]
+set_property IOSTANDARD LVCMOS33 [get_ports SD_SCK]
+set_property PACKAGE_PIN M5 [get_ports SD_MISO]
+set_property IOSTANDARD LVCMOS33 [get_ports SD_MISO]
+
+
 #set_property PACKAGE_PIN M6 [get_ports SD_CK]
 #set_property IOSTANDARD LVCMOS33 [get_ports SD_CK]
 #set_property PACKAGE_PIN L5 [get_ports SD_nCS]

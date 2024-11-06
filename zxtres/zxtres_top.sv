@@ -46,13 +46,14 @@ module zxtres_top (
 `ifdef USE_AUDIO_IN
 	input         AUDIO_IN,
 `endif
-	input         UART_RX,
-	output        UART_TX,
+//	input         UART_RX,
+//	output        UART_TX,
 
 	input         SD_SCK,		//SD_SCK is being driven by middleboard
 	input         SD_MISO
 );
 
+wire UART_TX, UART_RX;
 
 TGFX16_Shared_Top guest
  (

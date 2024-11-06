@@ -114,19 +114,33 @@ begin
 	end process;
 
 	
+--	FIFO : entity work.SCSI_FIFO 
+--	port map(
+--		aclr     => not RESET_N,
+--
+--		wrclk		=> CLK,
+--		data		=> FIFO_D,
+--		wrreq		=> FIFO_WR_REQ,
+--		wrfull	=> FULL,
+--		
+--		rdclk		=> CLK,
+--		rdreq		=> FIFO_RD_REQ,
+--		rdempty	=> EMPTY,
+--		q			=> FIFO_Q
+--	);
 	FIFO : entity work.SCSI_FIFO 
 	port map(
-		aclr     => not RESET_N,
+		rst    => not RESET_N,
 
-		wrclk		=> CLK,
-		data		=> FIFO_D,
-		wrreq		=> FIFO_WR_REQ,
-		wrfull	=> FULL,
+		wr_clk => CLK,
+		din		 => FIFO_D,
+		wr_en	 => FIFO_WR_REQ,
+		full	 => FULL,
 		
-		rdclk		=> CLK,
-		rdreq		=> FIFO_RD_REQ,
-		rdempty	=> EMPTY,
-		q			=> FIFO_Q
+		rd_clk => CLK,
+		rd_en	 => FIFO_RD_REQ,
+		empty	 => EMPTY,
+		dout	 => FIFO_Q
 	);
 
 	process( CLK, RESET_N ) begin
