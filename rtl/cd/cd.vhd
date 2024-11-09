@@ -172,6 +172,7 @@ architecture rtl of cd is
 	signal FIFO_D 				: std_logic_vector(31 downto 0);
 	signal FIFO_Q 				: std_logic_vector(31 downto 0);
 	signal FIFO_USEDW       : std_logic_vector(11 downto 0);
+	signal FIFO_USEDW2      : std_logic_vector(12 downto 0);
 	signal SAMPLE_CE 			: std_logic;
 	signal ADPCM_CE             : std_logic;
 	signal OUTL 				: signed(25 downto 0);
@@ -671,6 +672,7 @@ begin
 	end process;
 
 	CD_FIFO_HALFFULL <= FIFO_USEDW(11);
+	FIFO_USEDW <= FIFO_USEDW(11 downto 0); 
 
 	FIFO : entity work.CDDA_FIFO 
 	port map(
@@ -678,7 +680,7 @@ begin
 		din		   => FIFO_D,
 		wr_en	   => FIFO_WR_REQ,
 		full	   => FIFO_FULL,
-		data_count => FIFO_USEDW,
+		data_count => FIFO_USEDW2,
 
 		rd_en	   => FIFO_RD_REQ,
 		empty	   => FIFO_EMPTY,

@@ -289,10 +289,11 @@ wire        i2c_end;
 wire SPI_DO_UIO; // CONF_DATA0
 wire SPI_DO_DIO; //(SPI_SS2, SPI_SS4
 wire SPI_DO_DIOPCE; //SPI_SS2 
+wire oe;
 
 assign SPI_DO = !CONF_DATA0 ?  SPI_DO_UIO :
                 !SPI_SS4 ? 1'bz :
-                !SPI_SS2 ? (SPI_DO_DIO & SPI_DO_DIOPCE) : 1'bz; 
+                !SPI_SS2 ? (oe ? SPI_DO_DIOPCE :SPI_DO_DIO) : 1'bz; 
 
 //	.SPI_SS2(SPI_SS2),
 //	.SPI_SS4(SPI_SS4),
@@ -386,7 +387,8 @@ data_io_pce data_io_pce
 	.cd_dat_req(cd_dat_req),
 	.cd_dataout_req(cd_dataout_req),
 	.cd_reset_req(cd_reset_req),
-	.cd_fifo_halffull(cd_fifo_halffull)
+	.cd_fifo_halffull(cd_fifo_halffull),
+	.oe(oe)
 );
 
 ////////////////////////////  SDRAM  ///////////////////////////////////

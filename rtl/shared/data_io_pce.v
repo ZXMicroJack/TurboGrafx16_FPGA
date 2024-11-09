@@ -46,7 +46,9 @@ module data_io_pce
 	output reg        cd_dataout_req,
 	input             cd_dat_req,
 	input             cd_reset_req,
-	input             cd_fifo_halffull
+	input             cd_fifo_halffull,
+
+	output reg        oe = 1'b0
 );
 
 ///////////////////////////////   DOWNLOADING   ///////////////////////////////
@@ -81,11 +83,11 @@ always@(posedge SPI_SCK or posedge SPI_SS2) begin : data_input
 		byte_cnt <= 0;
 	end else begin
 		spi_transfer_end_r <= 0;
-		
 		bit_cnt <= bit_cnt + 1'd1;
 
-		if(bit_cnt != 7)
+		if(bit_cnt != 7) begin
 			sbuf[6:0] <= { sbuf[5:0], SPI_DI };
+    end
 
 		// finished reading a byte, prepare to transfer to clk_sys
 		if(bit_cnt == 7) begin
@@ -109,13 +111,14 @@ always@(negedge SPI_SCK or posedge SPI_SS2) begin : data_output
 
 	if(SPI_SS2) begin
 		SPI_DO <= 1'bZ;
+    oe <= 1'b0;
 	end else begin
 		if(cmd == CD_COMMAND_GET)
-			SPI_DO <= cd_command[{ byte_cnt - 1'd1, ~bit_cnt }];
+			{oe, SPI_DO} <= {1'b1, cd_command[{ byte_cnt - 1'd1, ~bit_cnt }]};
 		else if (cmd == CD_DATA_GET)
-			SPI_DO <= cd_data[{ byte_cnt - 1'd1, ~bit_cnt }];
+			{oe, SPI_DO} <= {1'b1, cd_data[{ byte_cnt - 1'd1, ~bit_cnt }]};
 		else
-			SPI_DO <= cd_status[~bit_cnt];
+			{oe, SPI_DO} <= {1'b1, cd_status[~bit_cnt]};
 	end
 end
 
@@ -149,6 +152,7 @@ always @(posedge clk_sys) begin
 
 		if(abyte_cnt == 0) begin
 			acmd <= spi_byte_in;
+
 		end else begin
 			case (acmd)
 				CD_STAT_SEND:

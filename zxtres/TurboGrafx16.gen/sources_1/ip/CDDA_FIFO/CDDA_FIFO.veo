@@ -62,7 +62,7 @@ CDDA_FIFO your_instance_name (
   .dout(dout),              // output wire [31 : 0] dout
   .full(full),              // output wire full
   .empty(empty),            // output wire empty
-  .data_count(data_count)  // output wire [11 : 0] data_count
+  .data_count(data_count)  // output wire [12 : 0] data_count
 );
 // INST_TAG_END ------ End INSTANTIATION Template ---------
 
