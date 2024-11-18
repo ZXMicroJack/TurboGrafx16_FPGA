@@ -1,0 +1,6 @@
+verilog xil_defaultlib  \
+"../../../../TurboGrafx16.gen/sources_1/ip/voltab/sim/voltab.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

@@ -269,7 +269,7 @@ end generate;
 
 CPU : entity work.HUC6280
 generic map(
-	VOLTAB_FILE => "../voltab/voltab_small.mif"
+	VOLTAB_FILE => "../voltab/voltab_small.hex"
 )
 port map(
 	CLK 		=> CLK,

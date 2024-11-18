@@ -49,15 +49,24 @@ signal req_pipe : std_logic_vector(4 downto 0);
 begin
 
 -- attenuation table
-
-VT : entity work.dpram generic map (8,A_WIDTH/2,VOLTAB_FILE)
+VT : entity work.voltab
 port map (
-	clock		=> CLK,
-	address_a=> '0'&ATTENUATION,
-	address_b=> '1'&ATTENUATION,
-	q_a		=> scale(A_WIDTH-1 downto A_WIDTH/2),
-	q_b		=> scale(A_WIDTH/2-1 downto 0)
+	clka		=> CLK,
+	addra=> '0'&ATTENUATION,
+	addrb=> '1'&ATTENUATION,
+	douta		=> scale(A_WIDTH-1 downto A_WIDTH/2),
+	doutb		=> scale(A_WIDTH/2-1 downto 0)
 );
+
+
+--VT : entity work.dpram generic map (8,A_WIDTH/2,VOLTAB_FILE)
+--port map (
+--	clock		=> CLK,
+--	address_a=> '0'&ATTENUATION,
+--	address_b=> '1'&ATTENUATION,
+--	q_a		=> scale(A_WIDTH-1 downto A_WIDTH/2),
+--	q_b		=> scale(A_WIDTH/2-1 downto 0)
+--);
 
 
 sample_in(5 downto 1) <= signed(sample);
